@@ -1,16 +1,47 @@
 package com.oddle.app.weather.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.oddle.app.weather.entity.Response;
+import com.oddle.app.weather.service.InfoService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
 
 @RestController
 public class WeatherController {
+    private final InfoService infoService;
+
+    public WeatherController(InfoService infoService) {
+        this.infoService = infoService;
+    }
 
     @GetMapping("")
     public Map<String, Object> getWeathers() {
         return Collections.singletonMap("message", "Welcome to Oddle Backend Challenge");
+    }
+
+    @GetMapping("/info")
+    public Response getInfo(@RequestParam("q") String cityName) {
+        return infoService.getInfo(cityName);
+    }
+
+    @GetMapping("/save")
+    public Response saveInfo(@RequestParam("q") String cityName) {
+        return infoService.saveInfo(cityName);
+    }
+
+    @GetMapping("/history")
+    public Response history(@RequestParam("q") String cityName) {
+        return infoService.getInfoInDB(cityName);
+    }
+
+    @DeleteMapping("/info/{id}")
+    public Response delete(@PathVariable("id") int id) {
+        return infoService.delete(id);
+    }
+
+    @DeleteMapping("/info")
+    public Response delete(@RequestParam("q") String cityName) {
+        return infoService.delete(cityName);
     }
 }
