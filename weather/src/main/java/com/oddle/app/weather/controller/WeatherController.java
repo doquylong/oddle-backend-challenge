@@ -16,8 +16,8 @@ public class WeatherController {
     }
 
     @GetMapping("")
-    public Map<String, Object> getWeathers() {
-        return Collections.singletonMap("message", "Welcome to Oddle Backend Challenge");
+    public String doc() {
+        return "Please access <a href=\"http://localhost:8080/swagger-ui.html\">this link</a>  to redirect to APIs infomation page";
     }
 
     @GetMapping("/info")
